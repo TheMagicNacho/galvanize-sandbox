@@ -1,0 +1,23 @@
+{
+  "name": "galvanize-sandbox",
+  "version": "1.0.0",
+  "description": "sandbox environemnet specificly for galvanize",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheMagicNacho/galvanize-sandbox.git"
+  },
+  "keywords": [
+    "sandbox",
+    "galvanize"
+  ],
+  "author": "TheMagicNacho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheMagicNacho/galvanize-sandbox/issues"
+  },
+  "homepage": "https://github.com/TheMagicNacho/galvanize-sandbox#readme"
+}
