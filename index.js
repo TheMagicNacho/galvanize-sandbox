@@ -1,26 +1,45 @@
-function myFunction(input){
+//Input: String
+//Output: Single String
+//Constraints: One function
+//Execution: Can identify changes in patterns.
 
-    // const num = input;
+// function firstNonRepeatedCharacter(inputUsr) 
+var firstNonRepeatedCharacter = function (inputUsr){
+  //condition input
+  if (inputUsr === null || inputUsr === '' || inputUsr === undefined){return null};
+  const inputStr = (typeof inputUsr === 'string') ? inputUsr : inputUsr.toString();
+  //Create evaluator array
+  let evaluationArray = inputStr.split('');
 
-    const functionArray = [
-      (num)=>{return num += 1},
-      (num)=>{return num * 2},
-      (num)=>{return num * 534},
-      (num)=>{return num / 3},
-      (num)=>{return Math.round(num)}
-    ]
-    
-    let out = [];
-    for (let func of functionArray) {
-      let _calculated = func(input);
-      out.push(_calculated);
+
+  // Create Evaluator Annon function
+  // const reducerFunc = (a, b) => { if (a !== b) return b; };
+  // Evaluate using reduce
+  // Logic: if a != b return b
+  // evaluationArray.reduce(reducerFunc);
+  for (let i = 0; i < evaluationArray.length; i++){
+    if (i === (evaluationArray.length-1))
+    {
+      return null;
     }
-    return out.reduce(function(l, c){return l + c}, 0);
+    else if (evaluationArray[i+1] == undefined)
+    {
+      return null;
+    }
+    else if (evaluationArray[i] !== evaluationArray[i+1])
+    {
+      return evaluationArray[i+1];
+    } else {
+      continue;
+    }
   }
+ 
+  // //OUTPUT
+  // return evaluationArray.reduce((previous, current) => { if (previous !== current) return current; });
+}
+
+module.exports = firstNonRepeatedCharacter;
 
 
-
-///// UNIT TEST ////
-let output = myFunction(0);
-console.log(output);
-
+// //UNIT TEST//
+console.log(firstNonRepeatedCharacter('AABCABD'));
