@@ -1,45 +1,64 @@
-//Input: String
-//Output: Single String
-//Constraints: One function
-//Execution: Can identify changes in patterns.
+var BinarySearchTree = function(value) {
+  var newTree = Object.create(BSTMethods);
+  newTree.value = value;
+  newTree.children = [];
+  newTree.root = null;  
+  newTree.left = null;
+  newTree.right = null;
+  
+  return newTree;
+};
+let BSTMethods = {};
 
-// function firstNonRepeatedCharacter(inputUsr) 
-var firstNonRepeatedCharacter = function (inputUsr){
-  //condition input
-  if (inputUsr === null || inputUsr === '' || inputUsr === undefined){return null};
-  const inputStr = (typeof inputUsr === 'string') ? inputUsr : inputUsr.toString();
-  //Create evaluator array
-  let evaluationArray = inputStr.split('');
-
-
-  // Create Evaluator Annon function
-  // const reducerFunc = (a, b) => { if (a !== b) return b; };
-  // Evaluate using reduce
-  // Logic: if a != b return b
-  // evaluationArray.reduce(reducerFunc);
-  for (let i = 0; i < evaluationArray.length; i++){
-    if (i === (evaluationArray.length-1))
-    {
-      return null;
+  BSTMethods.insert = function(value) {
+    if (value < this.value && this.left) {
+      this.left.insert(value);
     }
-    else if (evaluationArray[i+1] == undefined)
-    {
-      return null;
+    else if (value < this.value) {
+      this.left = new BinarySearchTree(value);
     }
-    else if (evaluationArray[i] !== evaluationArray[i+1])
-    {
-      return evaluationArray[i+1];
-    } else {
-      continue;
+
+    if (value > this.value && this.right) {
+      this.right.insert(value);
     }
-  }
- 
-  // //OUTPUT
-  // return evaluationArray.reduce((previous, current) => { if (previous !== current) return current; });
-}
+    else if (value > this.value) {
+      this.right = new BinarySearchTree(value);
+    }
+  };
 
-module.exports = firstNonRepeatedCharacter;
+  BSTMethods.contains = function(target) {
+    if (this.value === target) {
+      return true
+    }
+    
+    if (target < this.value && this.left) {
+      return this.left.contains(target);
+    }
+    else if (target > this.value && this.right) {
+      return this.right.contains(target);
+    }
+    else {
+      return false;
+    }
+  };
+
+  BSTMethods.depthFirstLog = function() {
+
+  };
 
 
-// //UNIT TEST//
-console.log(firstNonRepeatedCharacter('AABCABD'));
+
+
+
+
+module.exports = BinarySearchTree();
+
+var tree = BinarySearchTree();
+tree.insert(1);
+console.log(tree.contains(1));
+
+
+
+
+
+
