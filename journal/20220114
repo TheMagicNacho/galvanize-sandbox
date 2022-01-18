@@ -1,0 +1,3 @@
+## .call
+- the .call method will scope the object to within the block.
+- this is usefull for recursive fucntions

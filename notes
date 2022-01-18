@@ -1,0 +1,49 @@
+var BinarySearchTree = function(value) {
+  var newTree = Object.create(BSTMethods);
+  newTree.value = value;
+  newTree.children = [];
+  newTree.root = null;  
+  newTree.left = null;
+  newTree.right = null;
+  
+  return newTree;
+};
+let BSTMethods = {};
+
+  BSTMethods.insert = function(value) {
+    if (value < this.value && this.left) {
+      this.left.insert(value);
+    }
+    else if (value < this.value) {
+      this.left = new BinarySearchTree(value);
+    }
+
+    if (value > this.value && this.right) {
+      this.right.insert(value);
+    }
+    else if (value > this.value) {
+      this.right = new BinarySearchTree(value);
+    }
+  };
+
+  BSTMethods.contains = function(target) {
+    if (this.value === target) {
+      return true
+    }
+    
+    if (target < this.value && this.left) {
+      return this.left.contains(target);
+    }
+    else if (target > this.value && this.right) {
+      return this.right.contains(target);
+    }
+    else {
+      return false;
+    }
+  };
+
+  BSTMethods.depthFirstLog = function() {
+
+  };
+
+  
