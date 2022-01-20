@@ -1,194 +1,135 @@
-/*
-Each number key on a standard phone keypad has a set of Latin letters written on it as well: http://en.wikipedia.org/wiki/File:Telephone-keypad2.svg
-Businesses often try to come up with clever ways to spell out their phone number in advertisements to make it more memorable. But there are a lot of combinations!
-Write a function that takes up to four digits of a phone number, and returns a list of all of the words that can be written on the phone with that number. (You should return all permutations, not only English words.)
+// /*
+// Bubble sort is the most basic sorting algorithm in all of Computer Sciencedom. It works by starting at the first element of an array and comparing it to the second element; if the first element is greater than the second element, it swaps the two. It then compares the second to the third, and the third to the fourth, and so on; in this way, the largest values "bubble" to the end of the array. Once it gets to the end of the array, it starts over and repeats the process until the array is sorted numerically.
+// Implement a function that takes an array and sorts it using this technique. Don't use JavaScript's built-in sorting function (Array.prototype.sort).
+// QUERY: What's the time complexity of your algorithm? If you don't already know, try to intuit this without consulting the Googles.
+// Extra credit: Optimization time! During any given pass, if no elements are swapped we can assume the list is sorted and can exit the function early. After this optimization, what is the time complexity of your algorithm?
 
-Tips:
+// Moar credits: Do you need to consider every element every time you iterate through the array? Make it happen, boss. Again: Has the time complexity of your algorithm changed?
+// Example usage:
+// bubbleSort([2, 1, 3]); // yields [1, 2, 3]
 
-    Phone numbers are strings! (A phone number can start with a zero.)
-    The digits 0 and 1 do not have letters associated with them, so they should be left as numbers.
-    Don't return every combination of those digits in any order, just the order given.
+// Feel free to add helper functions if needed.
 
-Extra credit: There's a list of English dictionary words at /usr/share/dict/words . Why not filter your results to only return words contained in that file?
+// */
 
-telephoneWords('2745');
-=> ['APGJ',
-    'APGK',
-    'APGL',
-    ..., // many many more of these
-    'CSIL']
-*/
-
-var phoneDic = {
-  0: '000',
-  1: '111',
-  2: 'ABC',
-  3: 'DEF',
-  4: 'GHI',
-  5: 'JKL',
-  6: 'MNO',
-  7: 'PQRS',
-  8: 'TUV',
-  9: 'WXYZ'
-};
-
-//INPUT:  String of Four digits
-//OUTPUT: Array of combinations
-//Constraints: Must allign with phone pad numarics
-//Edge: Must handle if no usefull combination is passed.
-//Justification: usefull tool for marketers
-
-var telephoneWords = function (digitString) {
-  //CONDITION
-  // turn string into array
-  const stringArray = digitString.split('');
-  // turn string array into possiblities array: this is the main
-  let possibilityArray = [];
-  // loop through string array
-  for(let input of stringArray){
-    //push number dic result to possiblityArray
-    possibilityArray.push(phoneDic[parseInt(input)])
-  }
-  console.log(possibilityArray);
-  //Initiate the output array that holds strings ['','','']
-  let outputArray = [];
-
-  //Initiate counter array: used in recurse
-  let counterArray = [0, 0, 0, 0]
-
-  /*
-  Works like a clock driving a time piece
-  While loop drives index 0 forward. Everything else gets ticked forward later.
-
-    | 1 | 0 | 0 | 0 | COUNTER
-
-    | A | A | A | D | POSSIBLITY
-    | B | B | B | E |
-    | C | C | C | F |
-
-  */
-  //WORKER
-
-  // start driving while loop (counterArray[3] < 2) < moves counter up
-
-  while(counterArray[3] < 2){
-
-    //WORKING LOGIC < creates the strings for the array
-    //init tempString
-    let tempString = '';
-    //for loop (i = 0; i < possibilityArray.length; i++) possiblityArray
-    for(i = 0; i < possibilityArray.length; i++){
-      // init currentStr = PossibilityArray[index] Get the current string of Char
-      let currentStr = possibilityArray[i];
-      // get the char index IAW counterArray
-      tempString += currentStr[counterArray[i]]
-      
-    }
-    //once tempString loop is done, send the temp string to the array
-    outputArray.push(tempString);
-
-    //ITTERATE THE COUNTER ARRAY < drive the counter clock
-      //counterArray[0]++ < The watch driver
-      counterArray[0]++
-      //counter Reducer with Logic
-      // if a == 2 than b++ < the ticker
-
-      //TODO: this part his is hurting
-      let tempArray = counterArray
-        .reduce()
-        .map()
-      // counterArray = counterArray.reduce((a, b)=>{if(a===2){return ++b}else{return b}}); 
-
-      //?? What is it do at this point?
-      console.log("counter array: " + counterArray);
-
-    //zero the tempString
-    tempString = '';
-  }
+// //INPUT: Array of int
+// //OUTPUT: Sortted array of int
+// //EDGE:
+// //CONSTRAINTS: Must use bubble sort. Don't use sort
 
 
-  
+// var bubbleSort = function(array) {
+//   // let output=[];
+//   function a(element, index) {
+//     // console.log(`current element: ${element}`);
+//     let a = element;
+//     let b = array[index+1]
+//       if(a > b){ 
+//         array[index] = b;
+//         array[index+1] = a;
+//       }
+//     }
+
+//   for (let i = 0; i < array.length; i++){
+//     array.forEach(a);
+//   }  
+
+//   return array;
+// };
 
 
 
-  //RETURN OUTPUT
-  //array of strings
-  return outputArray;
-};
 
-
-var result = telephoneWords('0002');
-console.log(result);
 
 // module.exports = firstNonRepeatedCharacter;
 
-
-
-
-
-
-  // //CONDITION
-  // // turn string into array
-  // let stringArray = digitString.split('');
-  // // turn string array into possiblities array: this is the main
-  // let possibilityArray = [];
-  
-  // // loop through string array
-  // for(let input of stringArray){
-  //   //push number dic result to possiblityArray
-  //   possibilityArray.push(phoneDic[parseInt(input)])
-  // }
-  // console.log(possibilityArray);
-  // //Initiate the output array that holds strings ['','','']
-  // let outputArray = [];
-
-  // //Initiate counter array: used in recurse
-  // let counterArray = [0, 0, 0, 0]
-
-  // //RECURSE & WORK
-  // //init function
-  // function recurse(){
-  //   //Base Case: if counter array === [3,3,3,3] return
-  //   if (counterArray === [2, 2, 2, 2]) {return}
-  //   //init temp string to hold output
-  //    let _tempString = '';
-    
-  //    //loop through each item of the posiblities array
-  //   for (let i = 0 ; i < possibilityArray.length; i++){
-  //     //create a string from the array's output: string at index from counter array
-  //     let _evaluateStr = possibilityArray[i];
-  //     _tempString = _tempString + _evaluateStr[counterArray[i]];
-
-  //   }
-  //   //push string to output array. Once per recursion
-  //   outputArray.push(_tempString);
-
-  //   //Handle the counter
-  //     //Loop through counter
-  //     for(let j = 0; j < counterArray.length; j++){
-  //       //if index 3 == 3 on counter - set to 0 otherwise increment
-  //       if (counterArray[j] === 2){
-  //         counterArray[j] == 0; 
-  //       }
-  //       counterArray[j]++;
-  //       //recurse again
-  //       recurse();
-  //       // break;
-
+/*
+    function a(element, index) {
+      // console.log(`current element: ${element}`);
+        if(element > tickerBase){ 
+          counterArray[index]=0;
+          counterArray[index+1]++;
+        }
+      }
+*/
+  // function sortHelper(element, index) {
+  //   // console.log(`current element: ${element}`);
+  //   let a = element;
+  //   let b = array[index+1]
+  //     if(a > b){ 
+  //       array[index] = b;
+  //       array[index+1] = a;
   //     }
+  //   };
 
-  //   }  ////////////////////////////END RECURSION
+let c = 0;
+var bubbleSort = function(array) {
+    //let finLength = (array.length * array.length)
+    // let boolArray = [];
+    for(var i = 0; i < array.length; i++){
+      if (array[i] < array[i+1]) {
+          return array;
+          // boolArray.push(false);
+      }
+    }
+    // if(!boolArray.includes(false)){
+    //   return;
+    // }
+
+    // if (array ===  array.sort()) {
+    //   return array;
+    // }
+    if (c === array.length) {
+        c = 0;
+        bubbleSort(array)
+    }
+    else if (array[c] > array[c+1]) 
+    {
+        let tempVal = array[c];
+        array[c] = array[c+1];
+        array[c+1] = tempVal;
+        c += 1;
+        bubbleSort(array)
+    }
+    else {
+        c += 1;
+        bubbleSort(array)
+    }
+};
+
+var result = bubbleSort([ 1, 2, 43, 100, 100, 21, 21 ]);
+console.log(result);
 
 
 
-  // //OUTPUT
-  // // Call the recursion
-  // recurse();
-  // //return the output array
-  // // condition handeling?
-  // console.log('output array'+ outputArray)
-  // return outputArray;
+function bubbleSortRecursion(arr)
+{
+  const n = array.length;
+ function recurse(){
+    // Base case
+    if (n == 1)
+        return;
+  
+    // One pass of bubble
+    // sort. After this pass,
+    // the largest element
+    // is moved (or bubbled)
+    // to end.
+     
+    for (var i = 0; i < n - 1; i++)
+        if (arr[i] > arr[i + 1])
+        {
+         
+            // swap arr[i], arr[i+1]
+            var temp = arr[i];
+            arr[i] = arr[i + 1];
+            arr[i + 1] = temp;
+        }
+  
+    // Largest element is fixed,
+    // recur for remaining array
+    bubbleSort(arr, n - 1);
+ }
+ recurse();
 
-
-
-
+}
