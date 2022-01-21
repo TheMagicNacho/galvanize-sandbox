@@ -1,59 +1,75 @@
-// IMPLEMENT THE BICYCLE CLASS BELOW...
+// School
+class Ryu {
 
-class Vehicle {
-    constructor (numberOfWheels, maxSpeed) {
-      this.numberOfWheels = numberOfWheels
-      this.maxSpeed = maxSpeed
-      this.currentSpeed = 0
+}
+
+//Art 
+class Art extends Ryu {
+    constructor(name) {
+        super();
+        //visual indicator `_`
+        this._name = name;
     }
-  
-    accelerate (amount=1) {
-      if ((this.currentSpeed + amount) < this.maxSpeed) {
-        this.currentSpeed += amount
-      } else {
-        this.currentSpeed = this.maxSpeed
-      }
-  
-      return this.currentSpeed
+
+    //ENCAPSULATION
+    //syntactic sugar...
+    get name() {
+        return this._name;
     }
-  
-    decelerate (amount=1) {
-      if ((this.currentSpeed - amount) > 0) {
-        this.currentSpeed -= amount
-      } else {
-        this.currentSpeed = 0
-      }
-  
-      return this.currentSpeed
+
+    //syntactic sugar...
+    set name(value) {
+        this._name = value;
     }
-  }
-  
-  class Bicycle extends Vehicle{
-      constructor(color, maxSpeed){
-        this.numberOfWheels=2
-        super((numberOfWheels + 2), (maxSpeed = 30));
-        this.color = color;
+}
 
-      }
-      stop(){
-        this.currentSpeed = 0 ;
-        return this.currentSpeed;
+//Student
+class Student {
+    constructor(name) {
+        this._name = name;
     }
-      
-  }
+    //generic teach
+    teach () {
+        console.log("I can teach only basic stuff")
+    }
+}
+
+// A more specific type of Students
+class SpecialStudent extends Student {
+    constructor(name, art) {
+        super(); // SYNTACTIC SUGAR
+        this.name = name;
+        this.art = art;
+        this.special = "ninjitsu";
+    }
+
+    teach() {
+        //encapsulation
+        console.log(this.name + " teaches basic stuff and " + this.art.name);
+    }
+
+    teachesAikido() {
+        console.log(this.name + " teaches Aikido");
+    }
+
+}
+
+var judo = new Art("judo");
+var james = new SpecialStudent("James", judo);
+
+var gregory = new Student("gregory");
+ 
+// console.log(james.constructor);
+// console.log(gregory.constructor);
+
+// Gregory is a basic Student. James knows ninjitsu. As gregory I want to access ninjitsu
+//gregory.prototype.call(this, james)
+// SpecialStudent.call(gregory, teachesAikido());
 
 
-const bicycle = new Bicycle('bright red')
+// console.log(gregory.special);
+// gregory.teach();
 
-console.log(bicycle.color) // 'bright red'
-
-console.log(bicycle.numberOfWheels) // 2, it sets this automatically
-// console.log(bicycle.maxSpeed) // 30, it sets this automatically
-
-// console.log(bicycle.accelerate(5)) // 5, increase speed by 5 each time
-// console.log(bicycle.accelerate(10)) // 10
-// console.log(bicycle.accelerate(15)) // 15
-
-// console.log(bicycle.decelerate()) // 10, decrease speed by 5 each time
-// console.log(bicycle.stop()) // 0, a new method that completely stops the bike
+james.teachesAikido.call(gregory);
+console.log(gregory.special);
 
