@@ -1,0 +1,48 @@
+ISSUE: On incertion sort, tests kept failing these two tests:
+```
+1) should sort an array numerically by value property 
+2) should handle presorted arrays
+```
+Outputs, respectfully, are:
+```
+1) [ { value: 1, i: 0 },  { value: 2, i: 2 },  { value: 21, i: 4 },  { value: 43, i: 3 },  { value: 100, i: 1 } ]
+2) [ { value: 3, i: 2 }, { value: 4, i: 1 }, { value: 5, i: 0 } ]
+```
+
+Both tests Said: "ReferenceError: array2 is not defined"
+
+
+DISSCUSSION: To bypass this issue, I declareded the following outside of my function
+```js
+var array2 = [];
+```
+This allowed the tests to pass, but this seems hacky.
+Is this an issue with the way the test is written?
+
+RECOMENDATION: Edit test.
+
+
+{"_heightmapWidth":65,"_hasWaterMask":false,"_hasVertexNormals":false,"_requestVertexNormals":false,"_requestWaterMask":false,"_requestMetadata":true,"_errorEvent":{"_listeners":[],"_scopes":[],"_toRemove":[],"_insideRaiseEvent":false},"_ready":false,"_readyPromise":{"promise":{},"resolver":{}},"_layers":[]}
+
+
+
+{
+    "_heightmapWidth": 65,
+    "_hasWaterMask": false,
+    "_hasVertexNormals": false,
+    "_requestVertexNormals": false,
+    "_requestWaterMask": false,
+    "_requestMetadata": true,
+    "_errorEvent": {
+        "_listeners": [],
+        "_scopes": [],
+        "_toRemove": [],
+        "_insideRaiseEvent": false
+    },
+    "_ready": false,
+    "_readyPromise": {
+        "promise": {},
+        "resolver": {}
+    },
+    "_layers": []
+}

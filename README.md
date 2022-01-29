@@ -1,2 +1,2 @@
 # galvanize-sandbox
-Sandbox and experiments specificly for galvanize
+Sandbox and experiments specificly for galvanize.
