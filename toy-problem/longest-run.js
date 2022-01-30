@@ -1,84 +1,110 @@
-//INPUT:  String of arbatrary length with letters.
-//OUTPUT: Array of head, tail index for longest order
-//Constraints: Needs to handle edge casses like null (try catch)
-//
-class _ConstructNode{
-  constructor(itterator, evaluatedChar, startInt, endInt){
-    this.index = itterator;
-    this.data = evaluatedChar;
-    this.start = startInt;
-    this.end = endInt;
-    this.accumulator = null;
-  }
+//INPUT: String
+//OUTPUT: TUPPLE
+// 1. Create array of objects
+// 2. find the largest object
+// 3. if multiple objects, find the object with the lowest index
+// 4. create the answer
+// 5. profit
+
+
+
+
+// OBJECT: char, start index, size
+class DataBall {
+	constructor(char, startIndex, size) {
+		this.char = char;
+		this.startIndex = startIndex;
+		this.size = size;
+	}
 }
 
 var longestRun = function(string) {
-  // condition input
-  if (string == '' || string == undefined || string == null) return null;
-  const objectHolder = new Map();
+	// console.log(`Input: ${string}`)
+	//CONDITION
+	//Edge Case: String is empty
+	if (string.length === 0 ){ return null}
 
-  let evaluationArray = string.split('');
-  // make the objects
-  for (i = 0; i < evaluationArray.length; i++ ){
-    if(evaluationArray[i] !== evaluationArray[i+1]){
-      // if current index is not the same as the next index create an object with the current index info
-      const node = new _ConstructNode(i, evaluationArray[i], i, i, null);
-    
-    } else if (evaluationArray[i] === evaluationArray[i+1]){
-      let j = evaluationArray[i];
-      let accumulator = 0;  
-      function recurseSearch(){
-        if (evaluationArray[j] !== evaluationArray[j+1]) 
-        j++;
-        accumulator++;
-        recurseSearch();
-        }
-        
-    
-    }else{
+	let container = [];
+	let startIndex = 0;
 
-    }
+	
+	// Turn the string into a cue
+	let cue = string.split('');
+	const cueSize = cue.length;
 
-  }
+	//WORK
+	// Ratchet the Cue to zero and create a container of matching objects
+	for (let i = 0; i < cueSize; i += 1){
+		const analysis = cue.shift();
+		
+		if(cue[0] === undefined || analysis === undefined){ 
+			//We have reached the end of any useable information
+			break;
+		} else if (analysis === cue[0]){
+			// Analize matches (if the next item in the cue is the same create an object with logic)
+			let runSize = 1;
+			// we know there is an adjacent letter, how long will this last? (size)
+			for (let j = 0; j < cue.length && cue[j] === analysis; j +=1){
+				runSize += 1;
+			}
+			//remove the group we just looked at
+			cue.splice(0, (runSize-1))
+			
+			// construct the dataBall
+			const dataBall = new DataBall(analysis, startIndex, runSize)
+
+			// container.push(JSON.stringify(dataBall));
+			container.push(dataBall);
+			startIndex += (runSize); //increment the index
+		} else {
+			// increment and keep going
+			startIndex += 1; //increment the index
+			continue;
+		}
+		
+	}
+	// find the largest index
+	let searchArray = [];
+	container.forEach(obj => searchArray.push(obj.size));
+	const winnerIndex = searchArray.indexOf(Math.max(...searchArray));
+	const winnerObj = container[winnerIndex];
+	//Handle Edge casses
+	if (winnerObj === undefined){return [0, 0]};
+	
+	console.log(`Winner Object: ${JSON.stringify(winnerObj)}`);
+
+	let output = [];
+	const start = winnerObj.startIndex;
+	const end = start + (winnerObj.size -1);
+	
+	output.push(start);
+	output.push(end);
+	
+	console.log(`Pre Return: ${output}`)
 
 
 
-  return evaluationArray;
-};
+	//RETURN
+	return output;
+  };
 
 
 
 
+var randomString = function(len) {
+	var text = "";
+	var possible = "abcdefghijklmnopqrstuvwxyz";
+  
+	for (var i = 0; i < len; i++) {
+	  text += possible.charAt(Math.floor(Math.random() * possible.length));
+	}
+  
+	return text;
+  };
 
 
-module.exports = longestRun();
-// UNIT TEST
-
-
-console.log(longestRun('aabbbcc'));
-
-/*
-Knowns: 
-Need to know the length of all possible orders.
-If there are two runs of equal length, return the first one.
-
-Process:
-- create cue
-- add matching patters to array in the cue
-- LOGIC: find the change in pattern (bubble sort)
-
--
-
-object
-index: int (hash)
-data: char (what char is being evaluated)
-start: int (start index)
-end: int (end index)
-
-
-
-*/
-
+//   console.log(longestRun(randomString(20)));
+  console.log(longestRun('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj'));
 
 
 
